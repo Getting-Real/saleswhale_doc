@@ -1,0 +1,47 @@
+{
+  "apiVersion": "0.1",
+  "swaggerVersion": "1.2",
+  "basePath": "http://localhost:3000/",
+  "resourcePath": "sessions",
+  "apis": [
+    {
+      "path": "api/sessions/login.json",
+      "operations": [
+        {
+          "summary": "Allow user to login in",
+          "notes": "Generate authentication token which can then be use to access other restricted APIs",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "username",
+              "type": "string",
+              "description": "Unique string represent the user",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "password",
+              "type": "string",
+              "description": null,
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 201,
+              "responseModel": null,
+              "message": "Created"
+            },
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Unauthorized"
+            }
+          ],
+          "method": "post",
+          "nickname": "Api::V1::Sessions#create"
+        }
+      ]
+    }
+  ]
+}
