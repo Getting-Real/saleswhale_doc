@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
       #session
       post 'sessions/login(.:format)', to: 'sessions#create'
+      post 'sessions/logout(.:format)', to: 'sessions#destroy'
     end
   end
 end

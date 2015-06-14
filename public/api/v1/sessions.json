@@ -9,7 +9,7 @@
       "operations": [
         {
           "summary": "Allow user to login in",
-          "notes": "Generate authentication token which can then be use to access other restricted APIs",
+          "notes": "Generate authentication token which can then be use to access other restricted APIsi, token will be stored in Redis for easy access later on",
           "parameters": [
             {
               "paramType": "form",
@@ -28,18 +28,57 @@
           ],
           "responseMessages": [
             {
-              "code": 201,
-              "responseModel": null,
-              "message": "Created"
-            },
-            {
               "code": 401,
               "responseModel": null,
               "message": "Unauthorized"
+            },
+            {
+              "code": 422,
+              "responseModel": null,
+              "message": "Username or Email had already in use"
             }
           ],
           "method": "post",
           "nickname": "Api::V1::Sessions#create"
+        }
+      ]
+    },
+    {
+      "path": "api/sessions/logout.json",
+      "operations": [
+        {
+          "summary": "Allow user to logout",
+          "notes": "Destroy user authentication token in both database and Redis",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "username",
+              "type": "string",
+              "description": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "authentication_token",
+              "type": "string",
+              "description": null,
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "Username and authentication token do not match"
+            },
+            {
+              "code": 404,
+              "responseModel": null,
+              "message": "User not found"
+            }
+          ],
+          "method": "post",
+          "nickname": "Api::V1::Sessions#destroy"
         }
       ]
     }
