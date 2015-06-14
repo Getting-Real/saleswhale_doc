@@ -77,4 +77,6 @@ SwaggerDocsSample::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  ENV['BASE_PATH'] = 'https://saleswhale-doc.herokuapp.com'
 end
