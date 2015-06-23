@@ -6,10 +6,16 @@ Rails.application.routes.draw do
       #user
       post 'users/sign_up(.:format)', to: 'users#sign_up'
       get 'users/profile(.:format)', to: 'users#profile'
+      post 'users/search(.:format)', to: 'users#search'
 
       #session
       post 'sessions/login(.:format)', to: 'sessions#create'
       post 'sessions/logout(.:format)', to: 'sessions#destroy'
+
+      #team
+      post 'teams/create(.:format)', to: 'teams#create'
+      get 'teams/:team_id/info(.:format)', to: 'teams#info'
+      post 'teams/:team_id/switch_role(.:format)', to: 'teams#switch_role'
     end
   end
 end

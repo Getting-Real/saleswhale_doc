@@ -9,14 +9,18 @@ class Api::V1::UsersController < ApplicationController
     param :form, :password, :string, :required
     param :form, :password_confirmation, :string, :required
     response :unprocessable_entity, 'username, email already exist | password does not match | internal server error'
-    response :created, 'Successfully create new user'
   end
 
   swagger_api :profile do
     summary 'Return user information'
     param :query, :user_id, :string, :required, 'User Id'
     response :not_found
-    response :ok
+  end
+
+  swagger_api :search do
+    summary 'Search username and email by keyword. Return list of users'
+    param :query, :keyword, :string, :required, 'Keyword to search for - matching both username and email'
+    response :unprocessable_entity, 'missing param keyword'
   end
 
   def sign_up
@@ -35,5 +39,20 @@ class Api::V1::UsersController < ApplicationController
                             email: 'jonsnow@thewall.got',
                             authentication_token: '32daksljhasklfhdskfhdskfkh'
                         }), status: :ok
+  end
+
+  def search
+    render json: Oj.dump([
+                          {
+                            id: 1234,
+                            username: "jon.snow.#{params[:keyword]}",
+                            email: 'jonsnow@thewall.got'
+                          },
+                          {
+                            id: 1235,
+                            username: 'sam.tarly',
+                            email: "samtartly#{params[:keyword]}@thewall.got"
+                          }
+                        ]), status: :ok
   end
 end
