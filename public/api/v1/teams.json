@@ -1,0 +1,116 @@
+{
+  "apiVersion": "0.1",
+  "swaggerVersion": "1.2",
+  "basePath": "/",
+  "resourcePath": "teams",
+  "apis": [
+    {
+      "path": "api/teams/create.json",
+      "operations": [
+        {
+          "summary": "Allow user to create team",
+          "notes": "Team name must be unique",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "name",
+              "type": "string",
+              "description": "Name for the new team",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 500,
+              "responseModel": null,
+              "message": "team already exist, or team name is not acceptable"
+            }
+          ],
+          "method": "post",
+          "nickname": "Api::V1::Teams#create"
+        }
+      ]
+    },
+    {
+      "path": "api/teams/{team_id}/info.json",
+      "operations": [
+        {
+          "summary": "Return team info",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "team_id",
+              "type": "integer",
+              "description": null,
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "You did not have access to this team"
+            },
+            {
+              "code": 404,
+              "responseModel": null,
+              "message": "team does not exist"
+            }
+          ],
+          "method": "get",
+          "nickname": "Api::V1::Teams#info"
+        }
+      ]
+    },
+    {
+      "path": "api/teams/{team_id}/switch_role.json",
+      "operations": [
+        {
+          "summary": "Update member role (owner or collaborator)",
+          "parameters": [
+            {
+              "paramType": "form",
+              "name": "team_id",
+              "type": "integer",
+              "description": null,
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "member_user_id",
+              "type": "integer",
+              "description": "User to change role",
+              "required": true
+            },
+            {
+              "paramType": "form",
+              "name": "role",
+              "type": "string",
+              "description": "New role to change to",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 401,
+              "responseModel": null,
+              "message": "you are not the owner of the team"
+            },
+            {
+              "code": 404,
+              "responseModel": null,
+              "message": "team does not exist | user does not exist"
+            },
+            {
+              "code": 422,
+              "responseModel": null,
+              "message": "user does not belong to team | missing required params"
+            }
+          ],
+          "method": "post",
+          "nickname": "Api::V1::Teams#switch_role"
+        }
+      ]
+    }
+  ]
+}

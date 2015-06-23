@@ -42,11 +42,6 @@
           ],
           "responseMessages": [
             {
-              "code": 201,
-              "responseModel": null,
-              "message": "Successfully create new user"
-            },
-            {
               "code": 422,
               "responseModel": null,
               "message": "username, email already exist | password does not match | internal server error"
@@ -73,11 +68,6 @@
           ],
           "responseMessages": [
             {
-              "code": 200,
-              "responseModel": null,
-              "message": "Ok"
-            },
-            {
               "code": 404,
               "responseModel": null,
               "message": "Not Found"
@@ -85,6 +75,32 @@
           ],
           "method": "get",
           "nickname": "Api::V1::Users#profile"
+        }
+      ]
+    },
+    {
+      "path": "api/users/search.json",
+      "operations": [
+        {
+          "summary": "Search username and email by keyword. Return list of users",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "keyword",
+              "type": "string",
+              "description": "Keyword to search for - matching both username and email",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 422,
+              "responseModel": null,
+              "message": "missing param keyword"
+            }
+          ],
+          "method": "post",
+          "nickname": "Api::V1::Users#search"
         }
       ]
     }

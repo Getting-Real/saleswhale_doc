@@ -10,6 +10,10 @@
     {
       "path": "api/v1/sessions.{format}",
       "description": "Session Management"
+    },
+    {
+      "path": "api/v1/teams.{format}",
+      "description": "Team Management"
     }
   ],
   "info": {
