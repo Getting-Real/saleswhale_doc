@@ -51,7 +51,7 @@ class Api::V1::UsersController < ApplicationController
                           {
                             id: 1235,
                             username: 'sam.tarly',
-                            email: "samtartly#{params[:keyword]}@thewall.got"
+                            email: "samtarly#{params[:keyword]}@thewall.got"
                           }
                         ]), status: :ok
   end

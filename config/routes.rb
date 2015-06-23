@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
       #user
       post 'users/sign_up(.:format)', to: 'users#sign_up'
-      get 'users/profile(.:format)', to: 'users#profile'
+      get 'users/:user_id/profile(.:format)', to: 'users#profile'
       post 'users/search(.:format)', to: 'users#search'
 
       #session
