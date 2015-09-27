@@ -1,7 +1,7 @@
 {
   "apiVersion": "0.1",
   "swaggerVersion": "1.2",
-  "basePath": "/",
+  "basePath": "http://localhost:3000/",
   "apis": [
     {
       "path": "api/v1/users.{format}",
@@ -14,6 +14,18 @@
     {
       "path": "api/v1/teams.{format}",
       "description": "Team Management"
+    },
+    {
+      "path": "api/v1/companies.{format}",
+      "description": "API for searching/importing companies"
+    },
+    {
+      "path": "api/v1/signals.{format}",
+      "description": "Signal Management"
+    },
+    {
+      "path": "api/v1/prospects.{format}",
+      "description": "Prospect Management"
     }
   ],
   "info": {

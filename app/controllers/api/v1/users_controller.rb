@@ -8,19 +8,23 @@ class Api::V1::UsersController < ApplicationController
     param :form, :email, :string, :required, 'User email, will be used to create first self contact'
     param :form, :password, :string, :required
     param :form, :password_confirmation, :string, :required
-    response :unprocessable_entity, 'username, email already exist | password does not match | internal server error'
+    response :bad_request, 'username/email/password/password_confirmation missing'
+    response :unprocessable_entity, 'username, email already exist | password does not match'
+    response :created
   end
 
   swagger_api :profile do
     summary 'Return user information'
-    param :query, :user_id, :string, :required, 'User Id'
-    response :not_found
+    response :unauthorized
+    response :ok
   end
 
-  swagger_api :search do
-    summary 'Search username and email by keyword. Return list of users'
-    param :query, :keyword, :string, :required, 'Keyword to search for - matching both username and email'
-    response :unprocessable_entity, 'missing param keyword'
+  swagger_api :accept_invite do
+    summary 'User to accept invite and become member of the team'
+    param :query, :invite_hash, :string, :required, 'Hash of the invite sent to user'
+    response :bad_request, 'Param invite_hash missing'
+    response :not_found, 'Cannot find valid invite with the invite hash'
+    response :created
   end
 
   def sign_up
@@ -41,18 +45,9 @@ class Api::V1::UsersController < ApplicationController
                         }), status: :ok
   end
 
-  def search
-    render json: Oj.dump([
-                          {
-                            id: 1234,
-                            username: "jon.snow.#{params[:keyword]}",
-                            email: 'jonsnow@thewall.got'
-                          },
-                          {
-                            id: 1235,
-                            username: 'sam.tarly',
-                            email: "samtarly#{params[:keyword]}@thewall.got"
-                          }
-                        ]), status: :ok
+  def accept_invite
+    render nothing: true, status: :created
   end
+
+  add_authentication_params [:profile, :accept_invite]
 end

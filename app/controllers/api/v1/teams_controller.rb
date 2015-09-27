@@ -1,71 +1,41 @@
 class Api::V1::TeamsController < ApplicationController
   swagger_controller :teams, 'Team Management'
 
-  swagger_api :create do
-    summary 'Allow user to create team'
-    notes 'Team name must be unique'
-    param :form, :name, :string, :required, 'Name for the new team'
-    response :unprocesseable_entity, 'team already exist, or team name is not acceptable'
-  end
-
   swagger_api :info do
     summary 'Return team info'
-    param :form, :team_id, :integer, :required
     response :not_found, 'team does not exist'
     response :unauthorized, 'You did not have access to this team'
+    response :ok
   end
 
-  swagger_api :switch_role do
-    summary 'Update member role (owner or collaborator)'
-    param :form, :team_id, :integer, :required
-    param :form, :member_user_id, :integer, :required, 'User to change role'
-    param :form, :role, :string, :required, 'New role to change to'
-    response :not_found, 'team does not exist | user does not exist'
-    response :unprocessable_entity, 'user does not belong to team | missing required params'
-    response :unauthorized, 'you are not the owner of the team'
+  swagger_api :confirm_team do
+    summary 'Allow new uear with invitation (type: owner) to finalize the team creation process and got added as owner'
+    param :query, :invite_hash, :string, :required, 'Hash string of invite'
+    response :not_found, 'team does not exist or invite does not exist'
+    response :bad_request, 'invite hash param is missing'
+    response :ok
   end
 
-  def create
-    render json: Oj.dump({
-      name: 'Thewall',
-      members: [
-        {
-          user: {
-            id: 26,
-            username: 'jonsnow',
-            email: 'jonsnow@thewall.got'
-          },
-          role: 'owner'
-        }
-      ]
-    }), status: :created
+  swagger_api :invite do
+    summary 'Allow owner to send out invitation'
+    param :query, :email, :string, :required, 'Email of user to send invite to'
+    param :query, :name,  :string, :optional, 'Name of user to send invite to'
+    response :bad_request, 'email param missing'
+    response :unauthorized, 'Must be owner of team'
+    response :created
+  end
+
+  def confirm_team
+    render json: Oj.dump({name: 'Saleswhale'}), status: :ok
   end
 
   def info
-    render json: Oj.dump({
-      name: 'Thewall',
-      members: [
-        {
-          user: {
-            id: 26,
-            username: 'jonsnow',
-            email: 'jonsnow@thewall.got'
-          },
-          role: 'owner'
-        },
-        {
-          user: {
-            id: 27,
-            username: 'sam',
-            email: 'sam@thewall.got'
-          },
-          role: 'member'
-        }
-      ]
-    }), status: :ok
+    render json: Oj.dump({name: 'Thewall'}), status: :ok
   end
 
-  def switch_role
+  def invite
     render nothing: true, status: :created
   end
+
+  add_authentication_params [:info, :invite]
 end
