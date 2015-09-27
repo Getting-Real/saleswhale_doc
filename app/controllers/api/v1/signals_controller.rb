@@ -28,5 +28,92 @@ class Api::V1::SignalsController < ApplicationController
     response :ok
   end
 
+  def index
+    render json: Oj.dump(
+      {"industries"=>
+       [{
+         "name"=>"industry_1",
+         "eComponentId"=>"industry_21"
+       },
+       {
+         "name"=>"industry_2",
+         "eComponentId"=>"industry_22"
+       }],
+       "districts"=>
+       [{
+         "name"=>"Raffles Place, Cecil, Marina, People's Park",
+         "eComponentId"=>"district_1"
+       },
+       {
+         "name"=>"Anson, Tanjong Pagar",
+        "eComponentId"=>"district_2"
+       },
+       {
+         "name"=>"Telok Blangah, Harbourfront",
+         "eComponentId"=>"district_3"
+       }]
+    }), status: :ok
+  end
+
+  def industries
+    render json: Oj.dump(
+       [{
+         "name"=>"industry_1",
+         "eComponentId"=>"industry_21"
+       },
+       {
+         "name"=>"industry_2",
+         "eComponentId"=>"industry_22"
+       }]
+    ), status: :ok
+  end
+
+  def districts
+    render json: Oj.dump(
+       [{
+         "name"=>"Raffles Place, Cecil, Marina, People's Park",
+         "eComponentId"=>"district_1"
+       },
+       {
+         "name"=>"Anson, Tanjong Pagar",
+        "eComponentId"=>"district_2"
+       },
+       {
+         "name"=>"Telok Blangah, Harbourfront",
+         "eComponentId"=>"district_3"
+       }]
+    ), status: :ok
+  end
+
+  def search_industry
+    render json: Oj.dump(
+       [{
+         "name"=>"industry_1",
+         "eComponentId"=>"industry_21"
+       },
+       {
+         "name"=>"industry_2",
+         "eComponentId"=>"industry_22"
+       }]
+    ), status: :ok
+  end
+
+  def search_ditrict
+    render json: Oj.dump(
+       [{
+         "name"=>"Raffles Place, Cecil, Marina, People's Park",
+         "eComponentId"=>"district_1"
+       },
+       {
+         "name"=>"Anson, Tanjong Pagar",
+        "eComponentId"=>"district_2"
+       },
+       {
+         "name"=>"Telok Blangah, Harbourfront",
+         "eComponentId"=>"district_3"
+       }]
+    ), status: :ok
+  end
+
   add_authentication_params [:index, :industries, :districts, :search_industry, :search_district]
 end

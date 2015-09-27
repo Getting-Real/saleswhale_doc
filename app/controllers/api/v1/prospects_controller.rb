@@ -118,5 +118,5 @@ class Api::V1::ProspectsController< ApplicationController
   end
 
   add_pagination_params [:user_prospects, :team_prospects, :company_prospects]
-  add_authentication_params [:user_prospect, :team_prospect, :company_prospects, :show, :import]
+  add_authentication_params [:user_prospects, :team_prospects, :company_prospects, :show, :import]
 end

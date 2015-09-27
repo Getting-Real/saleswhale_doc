@@ -8,7 +8,7 @@ class Api::V1::CompaniesController < ApplicationController
     param :query, :has_facebook, :boolean, :optional
     param :query, :has_website, :boolean, :optional
     param :query, :has_branches, :boolean, :optional
-    param :query, :summary, :boolean, :optional, 'if summary is true, only return count for matched results instead of full info', defaultValue: false
+    param :query, :detail, :boolean, :optional, 'if summary is true, only return count for matched results instead of full info', defaultValue: false
     response :unauthorized
     response :bad_request
     response :ok
@@ -48,7 +48,7 @@ class Api::V1::CompaniesController < ApplicationController
   end
 
   def search
-    if params[:summary].present? && params[:summary].to_bool
+    if params[:detail].blank?
       render json: Oj.dump({"result_count"=>3}), status: :ok
     else
       render json: Oj.dump(

@@ -38,6 +38,21 @@
               "required": false,
               "defaultValue": 10,
               "maximum": 50
+            },
+            {
+              "paramType": "path",
+              "name": "team_id",
+              "type": "integer",
+              "description": "Id of team",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "token",
+              "type": "string",
+              "description": "User's authentication token",
+              "required": true,
+              "defaultValue": "saleswhale-tok"
             }
           ],
           "method": "get",
@@ -79,6 +94,21 @@
               "required": false,
               "defaultValue": 10,
               "maximum": 50
+            },
+            {
+              "paramType": "path",
+              "name": "team_id",
+              "type": "integer",
+              "description": "Id of team",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "token",
+              "type": "string",
+              "description": "User's authentication token",
+              "required": true,
+              "defaultValue": "saleswhale-tok"
             }
           ],
           "method": "get",
